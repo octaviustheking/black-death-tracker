@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Death Spread</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("https://t4.ftcdn.net/jpg/10/35/52/31/360_F_1035523141_NdOngDnIdkOR6NVKENN8C7d5rPJFarD0.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: "Copperplate", fantasy;
+            text-align: center;
+            color: white;
+        }
+
+        .Top h1{
+            text-decoration: solid;
+            text-align: center;
+            font-size: 100px;
+            color:rgb(68, 109, 78);
+
+        }
+        .Top a {
+            float:left;
+            color: hsl(0, 37%, 45%);
+            text-align: center;
+            padding: 16px 48px;
+            text-decoration: none;
+            font-size: 35px;
+        }
+
+        input, button {
+            margin: 10px;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+
+        #map-container {
+            position: relative;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1000px;
+            height: 600px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0n4w3dGWClH2C27H1ar0omDVxGzCQLA1rsQ&s");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid #444;
+        }
+
+        #circle {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 0px;
+            height: 0px;
+            /* approximate location for Italy / Constantinople */
+            top: 320px;
+            left: 330px;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            pointer-events: none;
+        }
+        #circle2 {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 0px;
+            height: 0px;
+            /* approximate location for Italy / Constantinople */
+            top: 420px;
+            left: 460px;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            pointer-events: none;
+        }
+
+        #output p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header class="Top">
+        <h1>Black Death Tracker</h1>
+        <h2><a href = "main.html"> Home</a></h2>
+        <h2><a href = "spread.html">Spread </a></h2>
+        <h2><a href = "information.html">Information </a></h2>
+    </header> 
+
+    <input type="text" placeholder="Days">
+    <button>Submit</button>
+    <div id="output"></div>
+
+    <div id="map-container">
+        <div id="circle"></div>
+        <div id="circle2"></div>
+    </div>
+
+<script>
+    const btnEl = document.querySelector('button');
+    const inputEl = document.querySelector('input');
+    const outputEl = document.getElementById('output');
+    const circleEl = document.getElementById('circle');
+    const circleEl2 = document.getElementById('circle2');
+
+    btnEl.addEventListener('click', () => {
+        const days = parseInt(inputEl.value.trim());
+
+        if (!isNaN(days)) {
+            if (days > 1460) {
+                outputEl.innerHTML = `<p>The Black Death has ended</p>`;
+                circleEl.style.width = '0px';
+                circleEl.style.height = '0px';
+                circleEl2.style.width = '0px';
+                circleEl2.style.height = '0px';
+            } else {
+                outputEl.innerHTML = `<p>Days after 1347: ${days}</p>`;
+                const maxSize = 600;
+                const size = Math.min(days * 2, maxSize);
+                circleEl.style.width = `${size}px`;
+                circleEl.style.height = `${size}px`;
+                circleEl2.style.width = `${size}px`;
+                circleEl2.style.height = `${size}px`;
+            }
+            inputEl.value = "";
+        } else {
+            outputEl.innerHTML = `<p>Please enter a valid number!</p>`;
+        }
+    });
+</script>
+</body>
+</html>
